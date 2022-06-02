@@ -25,6 +25,14 @@ _requestMiniprogram.$http.beforeRequest = function (options) {
     title: '数据飞速加载中' });
 
 };
+// 封装的展示消息提示的方法烦烦烦
+uni.$showMsg = function () {var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '数据加载失败！';var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1500;
+  uni.showToast({
+    title: title,
+    duration: duration,
+    icon: 'none' });
+
+};
 // 关闭loading
 _requestMiniprogram.$http.afterRequest = function () {
 
