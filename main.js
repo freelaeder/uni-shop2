@@ -4,7 +4,23 @@ import Vue from 'vue'
 import App from './App'
 
 Vue.config.productionTip = false
-
+// 按需导入 $http 对象
+// 导入网络请求的包
+import { $http } from '@escook/request-miniprogram'
+uni.$http = $http
+// 配置请求根路径
+$http.baseUrl = 'https://api-hmugo-web.itheima.net'
+// 展示 loading 
+$http.beforeRequest = function( options){
+	uni.showLoading({
+		title:'数据飞速加载中'
+	})
+}
+// 关闭loading
+$http.afterRequest = function(){
+	
+	uni.hideLoading()
+}
 App.mpType = 'app'
 
 const app = new Vue({
