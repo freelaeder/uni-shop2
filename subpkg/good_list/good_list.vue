@@ -1,6 +1,6 @@
 <template>
 	<view>
-		
+		<h4>good_list</h4>
 	</view>
 </template>
 

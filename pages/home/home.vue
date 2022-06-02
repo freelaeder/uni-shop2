@@ -79,7 +79,7 @@
 				// 	})
 				// }
 				// 优化
-				if (res.meta.status != 200) return uni.$showMsg
+				if (res.meta.status != 200) return uni.$showMsg()
 				// 请求成功赋值
 				this.swiperList = res.message
 			},
@@ -90,7 +90,7 @@
 				} = await uni.$http.get('/api/public/v1/home/catitems')
 				console.log(res);
 				// 判断是否获取成功
-				if (res.meta.status != 200) return uni.$showMsg
+				if (res.meta.status != 200) return uni.$showMsg()
 				// 赋值
 				this.navList = res.message
 			},
@@ -110,7 +110,7 @@
 				} = await uni.$http.get('/api/public/v1/home/floordata')
 				// console.log(res);
 				// 判断失败
-				if(res.meta.status != 200) return uni.$showMsg
+				if(res.meta.status != 200) return uni.$showMsg()
 				// 通过双层 forEach 循环，处理 URL 地址
 				  res.message.forEach(floor => {
 				    floor.product_list.forEach(prod => {

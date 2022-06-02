@@ -218,7 +218,7 @@ var _default =
 
 
 
-                res.meta.status != 200)) {_context.next = 6;break;}return _context.abrupt("return", uni.$showMsg);case 6:
+                res.meta.status != 200)) {_context.next = 6;break;}return _context.abrupt("return", uni.$showMsg());case 6:
                 // 请求成功赋值
                 _this.swiperList = res.message;case 7:case "end":return _context.stop();}}}, _callee);}))();
     },
@@ -229,7 +229,7 @@ var _default =
                   uni.$http.get('/api/public/v1/home/catitems'));case 2:_yield$uni$$http$get2 = _context2.sent;res = _yield$uni$$http$get2.data;
                 console.log(res);
                 // 判断是否获取成功
-                if (!(res.meta.status != 200)) {_context2.next = 7;break;}return _context2.abrupt("return", uni.$showMsg);case 7:
+                if (!(res.meta.status != 200)) {_context2.next = 7;break;}return _context2.abrupt("return", uni.$showMsg());case 7:
                 // 赋值
                 _this2.navList = res.message;case 8:case "end":return _context2.stop();}}}, _callee2);}))();
     },
@@ -249,7 +249,7 @@ var _default =
                   uni.$http.get('/api/public/v1/home/floordata'));case 2:_yield$uni$$http$get3 = _context3.sent;res = _yield$uni$$http$get3.data;if (!(
 
 
-                res.meta.status != 200)) {_context3.next = 6;break;}return _context3.abrupt("return", uni.$showMsg);case 6:
+                res.meta.status != 200)) {_context3.next = 6;break;}return _context3.abrupt("return", uni.$showMsg());case 6:
                 // 通过双层 forEach 循环，处理 URL 地址
                 res.message.forEach(function (floor) {
                   floor.product_list.forEach(function (prod) {

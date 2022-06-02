@@ -1,6 +1,6 @@
 <template>
 	<view>
-		
+		<h4>good_detail</h4>
 	</view>
 </template>
 

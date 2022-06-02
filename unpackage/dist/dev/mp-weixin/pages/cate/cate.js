@@ -167,31 +167,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 var _default =
 {
   data: function data() {
@@ -199,7 +174,16 @@ var _default =
       // wh是当前屏幕可用的高低
       wh: 0,
       // 分类列表
-      cateList: [] };
+      cateList: [],
+      // 激活的索引
+      active: 0,
+      // 二级分类
+      cateLevel2: [],
+      // scrollop 距离top的距离
+      scrollTop: 0 };
+
+
+
 
 
 
@@ -222,7 +206,24 @@ var _default =
                 // 判断是否成功
                 if (!(res.meta.status != 200)) {_context.next = 7;break;}return _context.abrupt("return", uni.$showMsg);case 7:
                 // 赋值
-                _this.cateList = res.message;case 8:case "end":return _context.stop();}}}, _callee);}))();
+                _this.cateList = res.message;
+                // 二级分类赋值
+                _this.cateLevel2 = res.message[0].children;case 9:case "end":return _context.stop();}}}, _callee);}))();
+
+    },
+    // 点击切换 active 样式
+    activeChanged: function activeChanged(i) {
+      this.active = i;
+      // 点击的时候 二级分类也要相对应的改变
+      this.cateLevel2 = this.cateList[i].children;
+      // scrollTop 赋值为0
+      // 如果每次赋值一样，不会生效
+      // this.scrollTop=0
+      this.scrollTop = this.scrollTop == 0 ? 1 : 0;
+    },
+    gotoGoodList: function gotoGoodList(e) {
+      uni.navigateTo({
+        url: '/subpkg/good_list/good_list?cid=' + e.cat_id });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
