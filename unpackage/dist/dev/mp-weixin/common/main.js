@@ -38,6 +38,15 @@ _requestMiniprogram.$http.afterRequest = function () {
 
   uni.hideLoading();
 };
+
+// 封装的展示消息提示的方法
+uni.$showMsg = function () {var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '数据加载失败！';var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1500;
+  uni.showToast({
+    title: title,
+    duration: duration,
+    icon: 'none' });
+
+};
 _App.default.mpType = 'app';
 
 var app = new _vue.default(_objectSpread({},
