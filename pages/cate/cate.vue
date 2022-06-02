@@ -1,8 +1,10 @@
 <template>
 	<view>
 		<view class="scroll-view-container">
-			<!-- 左侧滚动视图区域 -->
-			<scroll-view scroll-y="true" class="srcoll-left" :style="{height: wh +'px'}">
+			<!-- 右侧滚动视图区域 -->
+			<scroll-view scroll-y="true" :style="{height: wh +'px'}">
+		
+
 				<block v-for="(item,i) in cateList" :key="i">
 					<!-- 如果索引等于active 添加 active 类名 -->
 					<view :class="['scroll-left-item' ,i == active ? 'active': '']" @click="activeChanged(i)">
@@ -29,6 +31,7 @@
 					</view>
 				</view>
 
+
 			</scroll-view>
 
 		</view>
@@ -43,6 +46,7 @@
 				wh: 0,
 				// 分类列表
 				cateList: [],
+
 				// 激活的索引
 				active: 0,
 				// 二级分类
@@ -50,6 +54,7 @@
 				// scrollop 距离top的距离
 				scrollTop:0,
 				
+
 
 
 
@@ -70,15 +75,17 @@
 				const {
 					data: res
 				} = await uni.$http.get('/api/public/v1/categories')
-				console.log(res)
+
+				// console.log(res)
 				// 判断是否成功
-				if (res.meta.status != 200) return uni.$showMsg
+				if(res.meta.status != 200 ) return uni.$showMsg()
 				// 赋值
 				this.cateList = res.message
-				// 二级分类赋值
-				this.cateLevel2 = res.message[0].children
-
+				
 			},
+
+
+			
 			// 点击切换 active 样式
 			activeChanged(i) {
 				this.active = i
@@ -94,6 +101,7 @@
 					 url: '/subpkg/good_list/good_list?cid=' + e.cat_id
 				})
 			}
+
 
 		}
 
@@ -136,6 +144,7 @@
 				}
 			}
 
+
 		}
 
 		// 右侧滚动视图区域
@@ -164,6 +173,7 @@
 					font-size: 12px;
 				}
 			}
+
 		}
 	}
 </style>

@@ -16,6 +16,14 @@ $http.beforeRequest = function( options){
 		title:'数据飞速加载中'
 	})
 }
+// 封装的展示消息提示的方法烦烦烦
+uni.$showMsg = function (title = '数据加载失败！', duration = 1500) {
+  uni.showToast({
+    title,
+    duration,
+    icon: 'none',
+  })
+}
 // 关闭loading
 $http.afterRequest = function(){
 	

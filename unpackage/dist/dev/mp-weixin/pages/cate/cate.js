@@ -167,6 +167,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -175,12 +178,14 @@ var _default =
       wh: 0,
       // 分类列表
       cateList: [],
+
       // 激活的索引
       active: 0,
       // 二级分类
       cateLevel2: [],
       // scrollop 距离top的距离
       scrollTop: 0 };
+
 
 
 
@@ -201,16 +206,18 @@ var _default =
     getCateList: function getCateList() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var _yield$uni$$http$get, res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
 
 
-                  uni.$http.get('/api/public/v1/categories'));case 2:_yield$uni$$http$get = _context.sent;res = _yield$uni$$http$get.data;
-                console.log(res);
-                // 判断是否成功
-                if (!(res.meta.status != 200)) {_context.next = 7;break;}return _context.abrupt("return", uni.$showMsg);case 7:
+                  uni.$http.get('/api/public/v1/categories'));case 2:_yield$uni$$http$get = _context.sent;res = _yield$uni$$http$get.data;if (!(
+
+
+
+                res.meta.status != 200)) {_context.next = 6;break;}return _context.abrupt("return", uni.$showMsg());case 6:
                 // 赋值
-                _this.cateList = res.message;
-                // 二级分类赋值
-                _this.cateLevel2 = res.message[0].children;case 9:case "end":return _context.stop();}}}, _callee);}))();
+                _this.cateList = res.message;case 7:case "end":return _context.stop();}}}, _callee);}))();
 
     },
+
+
+
     // 点击切换 active 样式
     activeChanged: function activeChanged(i) {
       this.active = i;
