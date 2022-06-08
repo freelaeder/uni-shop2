@@ -1,7 +1,11 @@
 <template>
 	<view>
 		<!-- 搜索组件 -->
-		<my-search></my-search>
+		<!-- 添加自定义属性 bgcolor radius -->
+		<!-- <my-search :bgcolor="'pink'" :radius="3"></my-search> -->
+		<view class="my-search-box">
+			<my-search @myclick='btnSearch'></my-search>
+		</view>
 		<!-- 轮播图 -->
 		<swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000" :circular="true">
 			<swiper-item v-for="(item,index) in swiperList" :key="index">
@@ -23,22 +27,25 @@
 			<!--每一层的item  -->
 			<view class="floor-item" v-for="(item,index) in floorList" :key="index">
 				<!-- 楼层的标题 -->
-				<image :src="item.floor_title.image_src"  class="floor-title"></image>
+				<image :src="item.floor_title.image_src" class="floor-title"></image>
 				<!-- 楼层的图片区域容器 -->
-				<view class="floor-img-box" >
+				<view class="floor-img-box">
 					<!-- 左侧 大的图片 -->
 					<navigator class="floor-img-left" :url="item.product_list[0].url">
-						<image :src="item.product_list[0].image_src"  :style="{width:item.product_list[0].image_width +'rpx'}" mode="widthFix"></image>
-					</navigator> 
-					 <!-- 右侧 4 个小图片的盒子 -->
-					  <view class="right-img-box">
-					    <navigator class="right-img-item" v-for="(item2, i2) in item.product_list" :key="i2" v-if="i2 !== 0" :url="item2.url">
-					      <image :src="item2.image_src" mode="widthFix" :style="{width: item2.image_width + 'rpx'}"></image>
-					    </navigator>
-					  </view>
+						<image :src="item.product_list[0].image_src"
+							:style="{width:item.product_list[0].image_width +'rpx'}" mode="widthFix"></image>
+					</navigator>
+					<!-- 右侧 4 个小图片的盒子 -->
+					<view class="right-img-box">
+						<navigator class="right-img-item" v-for="(item2, i2) in item.product_list" :key="i2"
+							v-if="i2 !== 0" :url="item2.url">
+							<image :src="item2.image_src" mode="widthFix" :style="{width: item2.image_width + 'rpx'}">
+							</image>
+						</navigator>
+					</view>
 				</view>
 			</view>
-			
+
 		</view>
 	</view>
 </template>
@@ -90,7 +97,7 @@
 				const {
 					data: res
 				} = await uni.$http.get('/api/public/v1/home/catitems')
-				console.log(res);
+				// console.log(res);
 				// 判断是否获取成功
 				if (res.meta.status != 200) return uni.$showMsg()
 				// 赋值
@@ -112,18 +119,28 @@
 				} = await uni.$http.get('/api/public/v1/home/floordata')
 				// console.log(res);
 				// 判断失败
-				if(res.meta.status != 200) return uni.$showMsg()
+				if (res.meta.status != 200) return uni.$showMsg()
 				// 通过双层 forEach 循环，处理 URL 地址
-				  res.message.forEach(floor => {
-				    floor.product_list.forEach(prod => {
-				      prod.url = '/subpkg/good_list/good_list?' + prod.navigator_url.split('?')[1]
-					  // console.log(prod.navigator_url.split('?')[1]);
-					  // console.log(prod.navigator_url.split('?')[0]);
-				    })
-				  })
+				res.message.forEach(floor => {
+					floor.product_list.forEach(prod => {
+						prod.url = '/subpkg/good_list/good_list?' + prod.navigator_url.split('?')[1]
+						// console.log(prod.navigator_url.split('?')[1]);
+						// console.log(prod.navigator_url.split('?')[0]);
+					})
+				})
 				// 成功的话赋值
 				this.floorList = res.message
+			},
+			// 点击搜索·框
+			btnSearch() {
+				// console.log('search');
+				// 跳转 search
+				uni.navigateTo({
+					url: '/subpkg/search/search'
+				})
 			}
+
+
 
 
 		}
@@ -131,6 +148,12 @@
 </script>
 
 <style lang="scss">
+	// search
+	.my-search-box{
+		position: sticky;
+		top: 0;
+		z-index: 999;
+	}
 	// 轮播图
 	swiper {
 		height: 330rpx;
@@ -158,19 +181,22 @@
 			height: 140rpx;
 		}
 	}
+
 	// 楼层
-	.floor-title{
+	.floor-title {
 		width: 100%;
 		height: 60rpx;
 	}
-	.floor-img-box{
+
+	.floor-img-box {
 		display: flex;
 		padding-left: 10rpx;
-		
+
 	}
-	.right-img-box{
-		 display: flex;
-		  flex-wrap: wrap;
-		  justify-content: space-around;
+
+	.right-img-box {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-around;
 	}
 </style>

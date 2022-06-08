@@ -205,6 +205,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -251,12 +258,12 @@ var _default =
     getNavList: function getNavList() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var _yield$uni$$http$get2, res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.next = 2;return (
 
 
-                  uni.$http.get('/api/public/v1/home/catitems'));case 2:_yield$uni$$http$get2 = _context2.sent;res = _yield$uni$$http$get2.data;
-                console.log(res);
-                // 判断是否获取成功
-                if (!(res.meta.status != 200)) {_context2.next = 7;break;}return _context2.abrupt("return", uni.$showMsg());case 7:
+                  uni.$http.get('/api/public/v1/home/catitems'));case 2:_yield$uni$$http$get2 = _context2.sent;res = _yield$uni$$http$get2.data;if (!(
+
+
+                res.meta.status != 200)) {_context2.next = 6;break;}return _context2.abrupt("return", uni.$showMsg());case 6:
                 // 赋值
-                _this2.navList = res.message;case 8:case "end":return _context2.stop();}}}, _callee2);}))();
+                _this2.navList = res.message;case 7:case "end":return _context2.stop();}}}, _callee2);}))();
     },
     // 分类点击事件
     navClick: function navClick(e) {
@@ -285,6 +292,14 @@ var _default =
                 });
                 // 成功的话赋值
                 _this3.floorList = res.message;case 8:case "end":return _context3.stop();}}}, _callee3);}))();
+    },
+    // 点击搜索·框
+    btnSearch: function btnSearch() {
+      // console.log('search');
+      // 跳转 search
+      uni.navigateTo({
+        url: '/subpkg/search/search' });
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
