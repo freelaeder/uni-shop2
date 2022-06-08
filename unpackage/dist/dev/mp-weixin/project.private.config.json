@@ -13,6 +13,20 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "subpkg/good_list/good_list",
+          "query": "cid=9",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "subpkg/good_list/good_list",
+          "query": "cid=5",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }
