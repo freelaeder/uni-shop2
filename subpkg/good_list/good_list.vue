@@ -44,7 +44,7 @@
 			async getGoodsList(cb) {
 				// 打开节流阀
 				this.isloading = true
-				const {
+				const { 
 					data: res
 				} = await uni.$http.get('/api/public/v1/goods/search', this.queryObj)
 				if (res.meta.status !== 200) return uni.$showMsg()
@@ -59,7 +59,7 @@
 			},
 			// 点击进入详情页
 			gotoDetail(e){
-				console.log(e.goods_id,'000000000000000');
+				// console.log(e.goods_id,'000000000000000');
 				uni.navigateTo({
 					url:'/subpkg/good_detail/good_detail?goods_id='+e.goods_id
 				})

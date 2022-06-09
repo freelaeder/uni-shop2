@@ -23,7 +23,7 @@
                     "path" : "good_detail/good_detail",
                     "style" :                                                                                    
                 {
-                    "navigationBarTitleText": "",
+                  
                     "enablePullDownRefresh": false
                 }
                 

@@ -27,6 +27,13 @@
           "query": "cid=5",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "subpkg/good_detail/good_detail",
+          "query": "goods_id=43986",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }
