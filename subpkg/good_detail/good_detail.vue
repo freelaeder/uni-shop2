@@ -23,6 +23,7 @@
 				<view class="favi">
 					<uni-icons type="star" size="18" color="gray"> </uni-icons>
 					<text>收藏</text>
+					
 				</view>
 			</view>
 			<!-- 运费 -->
@@ -32,7 +33,7 @@
 
 		</view>
 		<!-- 渲染富文本html结构 -->
-		<rich-text :nodes="goods_info.goods_introduce"></rich-text>
+	 	<rich-text :nodes="goods_info.goods_introduce"></rich-text>
 		<!-- 商品导航组件区域` -->
 		<view class="goods_nav">
 			<uni-goods-nav :fill="true" :options="options" :buttonGroup="buttonGroup" @click="onClick"
@@ -117,7 +118,7 @@
 			},
 			buttonClick(e) {
 				console.log(e)
-				this.options[2].info++
+				this.options[1].info++
 			}
 
 		}
