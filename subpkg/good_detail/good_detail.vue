@@ -23,17 +23,17 @@
 				<view class="favi">
 					<uni-icons type="star" size="18" color="gray"> </uni-icons>
 					<text>收藏</text>
-					
+
 				</view>
 			</view>
 			<!-- 运费 -->
 			<view class="yf">
-				快递:免运费
+				快递:免运费{{cart.length}}
 			</view>
 
 		</view>
 		<!-- 渲染富文本html结构 -->
-	 	<rich-text :nodes="goods_info.goods_introduce"></rich-text>
+		<rich-text :nodes="goods_info.goods_introduce"></rich-text>
 		<!-- 商品导航组件区域` -->
 		<view class="goods_nav">
 			<uni-goods-nav :fill="true" :options="options" :buttonGroup="buttonGroup" @click="onClick"
@@ -45,7 +45,39 @@
 </template>
 
 <script>
+	import {
+		mapState,
+		mapMutations,
+		mapGetters
+	} from 'vuex'
 	export default {
+		computed: {
+			// 映射cart.js 中的数据
+			...mapState('m_cart', ['cart']),
+			// 计算属性
+			...mapGetters('m_cart', ['total'])
+		},
+		watch: {
+			// 动态监听
+			// total(newVal) {
+			// 	const findResult = this.options.find(x => x.text === '购物车')
+			// 	if(findResult){
+			// 		findResult.info = newVal
+			// 	}
+			// }
+			total: {
+				handler(newVal) {
+					const findResult = this.options.find(x => x.text === '购物车')
+					if (findResult) {
+						findResult.info = newVal
+					}
+				},
+				//代表页面首次加载执行次方法
+				immediate: true
+			}
+
+
+		},
 		data() {
 			return {
 				goods_info: {},
@@ -57,7 +89,7 @@
 				}, {
 					icon: 'cart',
 					text: '购物车',
-					info: 2
+					info: 0
 				}],
 				buttonGroup: [{
 						text: '加入购物车',
@@ -81,6 +113,9 @@
 			this.getGoodsDetail(goods_id)
 		},
 		methods: {
+			// 映射 cart.js 中的方法
+			...mapMutations('m_cart', ['addToCart']),
+
 			// 获取商品详情
 			async getGoodsDetail(e) {
 				// console.log(e);
@@ -117,8 +152,20 @@
 				}
 			},
 			buttonClick(e) {
-				console.log(e)
-				this.options[1].info++
+				if (e.content.text === '加入购物车') {
+					//组织商品信息对象
+					const goods = {
+						goods_id: this.goods_info.goods_id,
+						goods_name: this.goods_info.goods_name,
+						goods_price: this.goods_info.goods_price,
+						goods_count: 1,
+						goods_big_logo: this.goods_info.goods_small_logo,
+						goods_state: true
+					}
+					// 调用addToCart方法
+					this.addToCart(goods)
+
+				}
 			}
 
 		}

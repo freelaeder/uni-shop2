@@ -8,7 +8,8 @@
 				<block v-for="(item,i) in cateList" :key="i">
 					<!-- 如果索引等于active 添加 active 类名 -->
 					<view :class="['scroll-left-item' ,i == active ? 'active': '']" @click="activeChanged(i)">
-						{{item.cat_name}}</view>
+						{{item.cat_name}}
+					</view>
 				</block>
 			</scroll-view>
 			<!-- 右侧滚动视图区域 -->
@@ -21,13 +22,14 @@
 					<!-- 当前二级分类下的三级分类 大盒子 -->
 					<view class="cate-lv3-list">
 						<!-- 三级分类的每一项 -->
-						<view class="cate-lv3-item" v-for="(item3,i3) in item2.children" :key="i3" @click="gotoGoodList(item3)">
+						<view class="cate-lv3-item" v-for="(item3,i3) in item2.children" :key="i3"
+							@click="gotoGoodList(item3)">
 							<!-- 三级分类的图片 -->
 							<image :src="item3.cat_icon"></image>
 							<!-- 文字 -->
 							<text> {{item3.cat_name}}</text>
 						</view>
-						
+
 					</view>
 				</view>
 
@@ -38,7 +40,9 @@
 </template>
 
 <script>
+	import badgeMix from '@/mixins/tabbar-badge.js'
 	export default {
+		mixins: [badgeMix],
 		data() {
 			return {
 				// wh是当前屏幕可用的高低
@@ -50,8 +54,8 @@
 				// 二级分类
 				cateLevel2: [],
 				// scrollop 距离top的距离
-				scrollTop:0,
-				
+				scrollTop: 0,
+
 
 
 
@@ -91,9 +95,9 @@
 				// this.scrollTop=0
 				this.scrollTop = this.scrollTop == 0 ? 1 : 0
 			},
-			gotoGoodList(e){
+			gotoGoodList(e) {
 				uni.navigateTo({
-					 url: '/subpkg/good_list/good_list?cid=' + e.cat_id
+					url: '/subpkg/good_list/good_list?cid=' + e.cat_id
 				})
 			}
 
@@ -147,21 +151,25 @@
 			font-size: 12px;
 			text-align: center;
 		}
+
 		// 三级分类
 		.cate-lv3-list {
 			display: flex;
 			flex-wrap: wrap;
-			.cate-lv3-item{
+
+			.cate-lv3-item {
 				display: flex;
 				width: 33.33%;
 				flex-direction: column;
 				text-align: center;
 				align-items: center;
 				margin-bottom: 12px;
+
 				image {
 					width: 60px;
 					height: 60px;
 				}
+
 				text {
 					font-size: 12px;
 				}
