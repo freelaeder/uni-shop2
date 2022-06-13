@@ -51,7 +51,9 @@
 </template>
 
 <script>
+	import badgeMix from '@/mixins/tabbar-badge.js'
 	export default {
+		mixins: [badgeMix],
 		data() {
 			return {
 				// 轮播图的数据列表
@@ -149,11 +151,12 @@
 
 <style lang="scss">
 	// search
-	.my-search-box{
+	.my-search-box {
 		position: sticky;
 		top: 0;
 		z-index: 999;
 	}
+
 	// 轮播图
 	swiper {
 		height: 330rpx;

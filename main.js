@@ -3,6 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 
+// 引入store
+import store from '@/store/store.js'
+
+
 Vue.config.productionTip = false
 // 按需导入 $http 对象
 // 导入网络请求的包
@@ -34,7 +38,8 @@ $http.afterRequest = function(){
 App.mpType = 'app'
 
 const app = new Vue({
-    ...App
+    ...App,
+	store
 })
 app.$mount()
 // #endif
