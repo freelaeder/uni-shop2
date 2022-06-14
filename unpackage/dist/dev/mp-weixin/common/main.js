@@ -8,7 +8,6 @@
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni, createApp) {__webpack_require__(/*! uni-pages */ 5);
-
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 3));
 var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ 6));
 
@@ -21,13 +20,23 @@ var _store = _interopRequireDefault(__webpack_require__(/*! @/store/store.js */ 
 
 var _requestMiniprogram = __webpack_require__(/*! @escook/request-miniprogram */ 16);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}wx.__webpack_require_UNI_MP_PLUGIN__ = __webpack_require__;_vue.default.config.productionTip = false; // 按需导入 $http 对象
 // 导入网络请求的包
-uni.$http = _requestMiniprogram.$http; // 配置请求根路径
+
+uni.$http = _requestMiniprogram.$http;
+// 配置请求根路径
 _requestMiniprogram.$http.baseUrl = 'https://api-hmugo-web.itheima.net';
 // 展示 loading 
 _requestMiniprogram.$http.beforeRequest = function (options) {
   uni.showLoading({
     title: '数据飞速加载中' });
 
+  // 判断请求是否为有权限的API接口
+  if (options.url.indexOf('/my/') !== -1) {
+    //为请求头添加身份字段
+    options.header = {
+      // 字段可以直接从vuex进行获取
+      Authorization: _store.default.state.m_user.token };
+
+  }
 };
 // 封装的展示消息提示的方法烦烦烦
 uni.$showMsg = function () {var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '数据加载失败！';var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1500;
