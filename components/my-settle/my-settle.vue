@@ -37,6 +37,7 @@
 			...mapGetters('m_user', ['addstr']),
 			// token 是用户登录后返回的字符串
 			...mapState('m_user', ['token']),
+			...mapState('m_cart', ['cart']),
 			// 判断是否全部选中
 			isFullCheck() {
 				return this.total === this.checkedCount
@@ -64,6 +65,8 @@
 				// if (!this.token) return uni.$showMsg('请先登录')
 				// 如果没有登陆 跳转登录
 				if (!this.token) return this.delayNavigate()
+				// 实现微信支付
+				this.payOrder()
 			},
 			// 展示倒计时的提示消息
 			showTips(n) {
@@ -108,6 +111,67 @@
 					// 根据最新的秒数展示
 					this.showTips(this.seconds)
 				}, 1000)
+			},
+			// 实现微信支付
+			async payOrder() {
+				// 组织订单对象
+				const orderInfo = {
+					// order_price:this.checkedGoodsAmout,
+					order_price: 0.01,
+					consignee_addr: this.addstr,
+					goods: this.cart.filter(x => x.goods_state).map(x => ({
+						goods_id: x.goods_id,
+						goods_number: x.goods_count,
+						goods_price: x.goods_price,
+					}))
+				}
+				// console.log(orderInfo, 'orderinfo');
+				// 发起订单请求
+				const {
+					data: res
+				} = await uni.$http.post('/api/public/v1/my/orders/create', orderInfo)
+
+				// if(res.meta.status !== 200) return uni.$showMsg('创建订单失败')
+				// const orderNumber = res.message.order_number
+
+				const orderNumber = "GD20220614000043400232303"
+				// 2. 订单预支付
+				// 2.1 发起请求获取订单的支付信息
+				const {
+					data: res2
+				} = await uni.$http.post('/api/public/v1/my/orders/req_unifiedorder', {
+					order_number: orderNumber
+				})
+				// 2.2 预付订单生成失败
+				// if (res2.meta.status !== 200) return uni.$showMsg('预付订单生成失败！')
+				// 2.3 得到订单支付相关的必要参数
+				// const payInfo = res2.message.pay
+				const payInfo = {
+					paySign: "8dasf90dfad9f0sdaf9sd90f",
+					signType: "MD5",
+					timeStamp: "159894333",
+					nonceStr: "IYENd2efvdjj",
+					package: "prepay_id-wx01123jflksadjflsjfljaslflsdd"
+				}
+				// 3. 发起微信支付
+				// 3.1 调用 uni.requestPayment() 发起微信支付
+				const [err, succ] = await uni.requestPayment(payInfo)
+				console.log(err,'err');
+				// 3.2 未完成支付
+				// if (err) return uni.$showMsg('订单未支付！')
+				// 3.3 完成了支付，进一步查询支付的结果
+				const {
+					data: res3
+				} = await uni.$http.post('/api/public/v1/my/orders/chkOrder', {
+					order_number: orderNumber
+				})
+				// 3.4 检测到订单未支付
+				// if (res3.meta.status !== 200) return uni.$showMsg('订单未支付！')
+				// 3.5 检测到订单支付完成
+				uni.showToast({
+					title: '支付完成！',
+					icon: 'success'
+				})
 			}
 
 		}

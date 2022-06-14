@@ -66,24 +66,27 @@
 				if (err || res.errMsg !== "login:ok") return uni.$showMsg('登录失败')
 				const query = {
 					code: res.code,
-					encrypteDate: info.encryptedData,
+					// code: '62a7e46b-05d5d280-40eb9c85',
+					encryptedData: info.encryptedData,
 					iv: info.iv,
 					rawData: info.rawData,
 					signature: info.signature
 				}
-				// const {
-				// 	data: loginResult
-				// } = await uni.$http.post('/api/public/v1/users/wxlogin', query)
-				// console.log(loginResult);
+				console.log(query,'query');
+				const {
+					data: loginResult
+				} = await uni.$http.post('/api/public/v1/users/wxlogin', query)
+				console.log(loginResult);
 				// if(loginResult.meta.status !== 200) return uni.$showMsg('登录失败')
 				const token =
 					'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjIzLCJpYXQiOjE1NjQ3MzAwNzksImV4cCI6MTAwMTU2NDczMDA3OH0.YPt-XeLnjV-_1ITaXGY2FhxmCe4NvXuRnRB8OMCfnP'
+				// 保存token到vuex
 				this.updateToken(token)
 				//跳转页面
 				this.navigateBack()
 			},
 			navigateBack(){
-				// redirectInfo 存在并且 null
+				// redirectInfo 存在并且 
 				if(this.redirectInfo && this.redirectInfo.openType === 'switchTab'){
 					uni.switchTab({
 						url:this.redirectInfo.from,
